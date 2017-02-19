@@ -1,5 +1,20 @@
 document.addEventListener("DOMContentLoaded", function(){
 //when dom is loaded...
+    
+     var containerElement = document.getElementById('one');
+var activeRegion = ZingTouch.Region(containerElement);
+    var childElement = document.getElementById('myCard');
+activeRegion.bind(childElement, 'swipe', function(event){
+	//Perform Operations
+    console.log(event.detail.data[0].currentDirection);
+    
+    if (event.detail.data[0].currentDirection>= 150 && event.detail.data[0].currentDirection<= 210){
+        alert("swiped left")
+    } else if (event.detail.data[0].currentDirection>= 330 || event.detail.data[0].currentDirection<= 30){
+        alert("swiped right")
+    }
+   // alert("swiped")
+});
 })
 var globalvar="Hello";
 window.addEventListener('push', function(ev){
