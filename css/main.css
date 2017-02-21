@@ -1,11 +1,12 @@
 .card {
-  margin: 10px;
-    padding: 10px;
+  margin: auto;
+    padding: 1rem;
   overflow: hidden;
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 6px;
-    min-height:  75vh;
+    height:  95%;
+    vertical-align: middle;
 }
 
 .card img{
@@ -13,9 +14,9 @@
     clear: both;
     margin: auto auto;
     
-    width: 90%;
+    width: 100%;
     
-    padding-top: 1rem;
+    
 }
 
 .delete {
