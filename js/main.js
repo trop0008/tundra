@@ -1,51 +1,11 @@
 "use strict";
 let gender = ""; //female or male or blank for both
-let url = "http://griffis.edumedia.ca/mad9022/tundra/get.profiles.php?gender=" + gender;
+let url = "https://griffis.edumedia.ca/mad9022/tundra/get.profiles.php?gender=" + gender;
 let profiles = [];
 let imgurl = "";
 let swipeCheck = false;
 
-document.addEventListener("DOMContentLoaded", function () {
-    //when dom is loaded...
-    let contentDiv = document.querySelector(".content");
-    let id = contentDiv.id; //contentDiv.getAttribute("id");
-    switch (id) {
-    case "x":
-        //do something for page x
-        break;
-    case "one":
-               
-        touchAction();
-        if (profiles.length < 3) {
-            getProfiles();
-        }
-        else {
-            showProfile();
-        }
-        break;
-    case "two":
 
-        // page two
-        break;
-    default:
-        //do the home page thing
-    }
-    /*     var containerElement = document.getElementById('one');
-    var activeRegion = ZingTouch.Region(containerElement);
-        var childElement = document.getElementById('myCard');
-    activeRegion.bind(childElement, 'swipe', function(event){
-    	//Perform Operations
-        console.log(event.detail.data[0].currentDirection);
-        
-        if (event.detail.data[0].currentDirection>= 150 && event.detail.data[0].currentDirection<= 210){
-            console.log("swiped left")
-        } else if (event.detail.data[0].currentDirection>= 330 || event.detail.data[0].currentDirection<= 30){
-            console.log("swiped right")
-        }
-       // alert("swiped")
-    });*/
-    // touchAction();
-})
 
 window.addEventListener('push', function (ev) {
     //determine the page
@@ -110,10 +70,10 @@ function getProfiles() {
         document.getElementById('myCard').innerHTML = "<h1 >Loading</h1>";
     }
     try{
-        fetch(url).then(function (response) {
+        fetch("https://griffis.edumedia.ca/mad9022/tundra/get.profiles.php").then(function (response) {
         return response.json();
     }).then(function (data) {
-        imgurl = "http:" + decodeURIComponent(data.imgBaseURL);
+        imgurl = "https:" + decodeURIComponent(data.imgBaseURL);
         //console.log(data.imgBaseURL);
         //console.log(imgurl);
         profiles = profiles.concat(data.profiles);
@@ -173,3 +133,46 @@ function showProfile() {
     cardprofile.appendChild(img);
     cardprofile.appendChild(h2);
 }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    //when dom is loaded...
+    let contentDiv = document.querySelector(".content");
+    let id = contentDiv.id; //contentDiv.getAttribute("id");
+    switch (id) {
+    case "x":
+        //do something for page x
+        break;
+    case "one":
+               
+        touchAction();
+        if (profiles.length < 3) {
+            getProfiles();
+        }
+        else {
+            showProfile();
+        }
+        break;
+    case "two":
+
+        // page two
+        break;
+    default:
+        //do the home page thing
+    }
+    /*     var containerElement = document.getElementById('one');
+    var activeRegion = ZingTouch.Region(containerElement);
+        var childElement = document.getElementById('myCard');
+    activeRegion.bind(childElement, 'swipe', function(event){
+    	//Perform Operations
+        console.log(event.detail.data[0].currentDirection);
+        
+        if (event.detail.data[0].currentDirection>= 150 && event.detail.data[0].currentDirection<= 210){
+            console.log("swiped left")
+        } else if (event.detail.data[0].currentDirection>= 330 || event.detail.data[0].currentDirection<= 30){
+            console.log("swiped right")
+        }
+       // alert("swiped")
+    });*/
+    // touchAction();
+})
