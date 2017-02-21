@@ -13,9 +13,8 @@
     clear: both;
     margin: auto auto;
     
-    width: 100%;
-    height: auto;
-    max-height: 50%;
+    width: 90%;
+    
     padding-top: 1rem;
 }
 
@@ -23,5 +22,9 @@
     vertical-align: middle;
     color: red;
     margin: 0 auto;
+    text-align: center;
+}
+.card h1, .card h2, .card p{
+    padding-top: 1rem;
     text-align: center;
 }
