@@ -1,10 +1,10 @@
 .card {
-  margin: auto;
+  margin: 0;
     padding: 1rem;
   overflow: hidden;
   background-color: white;
   border: 1px solid #ddd;
-  border-radius: 6px;
+  border-radius: 0px;
     height:  95%;
     vertical-align: middle;
     
@@ -15,7 +15,7 @@
     clear: both;
     margin: auto auto;
     
-    width: 55vh ;
+    width: 50vh ;
     
     
 }
