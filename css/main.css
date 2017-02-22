@@ -14,8 +14,10 @@
     display: block;
     clear: both;
     margin: auto auto;
-    
+    border: 5px solid #ddd;
+    border-radius: 50%;
     width: 50vh ;
+    
     
     
 }
@@ -36,6 +38,7 @@
 .male , .male p{
     background-color:#ADD5F7;
     color: #16193B;
+   
      
     
 }
@@ -43,7 +46,15 @@
 .female , .female p{
     background-color: #FFD8E6;
     color:#87071F;
+   
        
+}
+.male img {
+      border-color: #16193B;
+}
+
+.female img {
+     border-color:#87071F;
 }
 
 
