@@ -7,6 +7,7 @@
   border-radius: 6px;
     height:  95%;
     vertical-align: middle;
+    
 }
 
 .card img{
@@ -14,7 +15,7 @@
     clear: both;
     margin: auto auto;
     
-    width: 100%;
+    width: 55vh ;
     
     
 }
@@ -29,3 +30,20 @@
     padding-top: 1rem;
     text-align: center;
 }
+
+
+
+.male , .male p{
+    background-color:#ADD5F7;
+    color: #16193B;
+     
+    
+}
+
+.female , .female p{
+    background-color: #FFD8E6;
+    color:#87071F;
+       
+}
+
+
