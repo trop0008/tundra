@@ -1,10 +1,10 @@
 "use strict";
-let gender = ""; //female or male or blank for both
-let url = "https://griffis.edumedia.ca/mad9022/tundra/get.profiles.php?gender=" + gender;
-let profiles = [];
-let imgurl = "";
-let swipeCheck = false;
-window.addEventListener('push', function (ev) {
+var gender = ""; //female or male or blank for both
+var url = "http://griffis.edumedia.ca/mad9022/tundra/get.profiles.php?gender=" + gender;
+var profiles = [];
+var imgurl = "";
+var swipeCheck = true;
+/*window.addEventListener('push', function (ev) {
     //determine the page
     let contentDiv = ev.currentTarget.document.querySelector(".content");
     let id = contentDiv.id; //contentDiv.getAttribute("id");
@@ -27,10 +27,13 @@ window.addEventListener('push', function (ev) {
     default:
         //do the home page thing
     }
-});
+});*/
+
+
+
 
 function touchAction() {
-    console.log("reinitializing touch");
+    // console.log("reinitializing touch");
     let parentTouchArea = document.getElementById('one');
     let touchArea = document.getElementById('myCard');
     let myRegion = new ZingTouch.Region(parentTouchArea);
@@ -39,21 +42,19 @@ function touchAction() {
         , maxRestTime: 200
         , escapeVelocity: 0.001
     });
-    let containerElement = document.getElementById('one');
-    let activeRegion = ZingTouch.Region(containerElement);
-    let childElement = document.getElementById('myCard');
-    activeRegion.bind(touchArea, myTapGesture, swipeFunction);
+  
+    myRegion.bind(touchArea, myTapGesture, swipeFunction);
 }
 
 function swipeFunction(event) {
     let touchArea = document.getElementById('myCard');
-    console.log(event.detail.data[0].currentDirection);
-    console.log(event.detail.data[0].velocity);
+    // console.log(event.detail.data[0].currentDirection);
+    // console.log(event.detail.data[0].velocity);
     if (event.detail.data[0].currentDirection >= 150 && event.detail.data[0].currentDirection <= 210) {
         swipeLeft();
     }
     else if (event.detail.data[0].currentDirection >= 330 || event.detail.data[0].currentDirection <= 30) {
-        console.log("swiped right");
+        // console.log("swiped right");
         touchArea.textContent = "swiped right";
     }
     // alert("swiped")
@@ -67,11 +68,11 @@ function getProfiles() {
         fetch(url).then(function (response) {
             return response.json();
         }).then(function (data) {
-            imgurl = "https:" + decodeURIComponent(data.imgBaseURL);
-            //console.log(data.imgBaseURL);
-            //console.log(imgurl);
+            imgurl = "http:" + decodeURIComponent(data.imgBaseURL);
+            // console.log(data.imgBaseURL);
+            // console.log(imgurl);
             profiles = profiles.concat(data.profiles);
-            console.log(profiles);
+            // console.log(profiles);
             showProfile();
             /*profiles.forEach(function(person){
               let img = document.createElement("img");
@@ -93,11 +94,13 @@ function getProfiles() {
     catch (err) {
         //document.getElementById('myCard').innerHTML = err.message;
 
+            swipeCheck = true;
         function reqListener() {
             var data = JSON.parse(this.responseText);
-            console.log(data);
+            // console.log(data);
             profiles = profiles.concat(data.profiles);
-             imgurl = "https:" + decodeURIComponent(data.imgBaseURL);
+             imgurl = "http:" + decodeURIComponent(data.imgBaseURL);
+            
             showProfile();
         }
 
@@ -123,8 +126,8 @@ function swipeLeft() {
             getProfiles();
         }
         setTimeout(showProfile, 1000);
-        console.log(profile);
-        console.log(profiles);
+       // console.log(profile);
+       // console.log(profiles);
     }
 }
 
@@ -141,6 +144,7 @@ function showProfile() {
     cardprofile.appendChild(img);
     cardprofile.appendChild(h2);
     cardprofile.appendChild(p);
+    cardprofile.zIndex=1001;
     swipeCheck = true;
 }
 document.addEventListener("DOMContentLoaded", function () {
@@ -166,19 +170,35 @@ document.addEventListener("DOMContentLoaded", function () {
     default:
         //do the home page thing
     }
-    /*     var containerElement = document.getElementById('one');
-    var activeRegion = ZingTouch.Region(containerElement);
-        var childElement = document.getElementById('myCard');
-    activeRegion.bind(childElement, 'swipe', function(event){
-    	//Perform Operations
-        console.log(event.detail.data[0].currentDirection);
-        
-        if (event.detail.data[0].currentDirection>= 150 && event.detail.data[0].currentDirection<= 210){
-            console.log("swiped left")
-        } else if (event.detail.data[0].currentDirection>= 330 || event.detail.data[0].currentDirection<= 30){
-            console.log("swiped right")
+    
+    
+    window.addEventListener('push', function (ev) {
+    //determine the page
+    let contentDiv = ev.currentTarget.document.querySelector(".content");
+    let id = contentDiv.id; //contentDiv.getAttribute("id");
+    switch (id) {
+    case "x":
+        //do something for page x
+        break;
+    case "one":
+        touchAction();
+        if (profiles.length < 3) {
+            getProfiles();
         }
-       // alert("swiped")
-    });*/
-    // touchAction();
+        else {
+            showProfile();
+        }
+        break;
+    case "two":
+        //do something for the contacts page 
+        break;
+    default:
+        //do the home page thing
+    }
+});
+    
+    
+    
+    
+    
 })
