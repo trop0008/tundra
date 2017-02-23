@@ -31,7 +31,7 @@
     
      
 }
-.active {
+.activeSwipe {
     
     opacity: 0;
    
@@ -75,4 +75,28 @@
 
 .female img {
     border-color: #87071F;
+}
+
+.icon-trash {
+  
+    font-size: 3rem;
+    vertical-align: middle;
+    text-align: right;
+    
+
+}
+
+.media img {
+    display:inline-block;
+    clear: both;
+    margin: auto auto;
+    border: 5px solid #ddd;
+    border-radius: 50%;
+    width: 10vh;
+    
+}
+
+.navigate-right .trash {
+  right: 15px;
+  content: '<span class=" pull-left icon icon-trash" id="delete-saved"></span>';
 }

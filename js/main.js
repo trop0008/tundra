@@ -1,6 +1,7 @@
 /******************* setting global variables  **************************************/
 "use strict";
 let profiles = [];
+let savedProfiles = [];
 let imgurl = "";
 let swipeCheck = false;
 let gender = ""; //female or male or blank for both
@@ -121,8 +122,11 @@ function swipeRight() {
         if (swipeCheck == true) {
         console.log("swipeCheck true");
         let profile = profiles.shift();
+            console.log(profile);
+            savedProfiles = savedProfiles.concat(profile);
+            console.log(savedProfiles);
         swipeCheck = false;
-        document.getElementById('myCard').classList.add("active") ;
+        document.getElementById('myCard').classList.add("activeSwipe") ;
         //document.getElementById('myCard').className = "card table-view";
         document.getElementById('myCard').innerHTML = "<h1 class='saved'>Saved Profile</h1>";
         let preloadimg = new Image();
@@ -140,7 +144,7 @@ function swipeLeft() {
         console.log("swipeCheck true");
         let profile = profiles.shift();
         swipeCheck = false;
-        document.getElementById('myCard').classList.add("active") ;
+        document.getElementById('myCard').classList.add("activeSwipe") ;
         //document.getElementById('myCard').className = "card table-view";
         document.getElementById('myCard').innerHTML = "<h1 class='delete'>Deleted Profile</h1>";
         let preloadimg = new Image();
@@ -175,9 +179,11 @@ function init(ev) {
     //determine the page
     let contentDiv = document.querySelector(".content");
     let id = contentDiv.id; //contentDiv.getAttribute("id");
+    
     switch (id) {
     case "one":
         if (profiles.length == 0) {
+            
             document.getElementById('myCard').innerHTML = "<h1 class='saved'>Loading....</h1>";
             
             getProfiles();
