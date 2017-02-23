@@ -1,60 +1,78 @@
 .card {
-  margin: 0;
+    margin: 0;
     padding: 1rem;
-  overflow: hidden;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 0px;
-    height:  95%;
+    overflow: hidden;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 0px;
+    height: 95%;
     vertical-align: middle;
+    text-align: center;
     
 }
 
-.card img{
+.card img {
     display: block;
     clear: both;
     margin: auto auto;
     border: 5px solid #ddd;
     border-radius: 50%;
-    width: 50vh ;
+    width: 50vh;
+}
+
+.delete,
+.saved {
+    
+    font-size: 4rem;
+    vertical-align: middle;
+    margin-top: 16vh;
+    text-align: center;
     
     
+     
+}
+.active {
     
+    opacity: 0;
+   
+    transform:  scale(0.1);
+    border-radius: 50%;
+    width: 100vw;
+     height: 100vw;
+    transition: transform 1s ease-in, opacity 3s ease;
 }
 
 .delete {
-    vertical-align: middle;
-    color: red;
-    margin: 0 auto;
-    text-align: center;
-}
-.card h1, .card h2, .card p{
-    padding-top: 1rem;
-    text-align: center;
+    color: #87071F;
 }
 
-
-
-.male , .male p{
-    background-color:#ADD5F7;
+.saved {
     color: #16193B;
-   
-     
-    
 }
 
-.female , .female p{
-    background-color: #FFD8E6;
-    color:#87071F;
-   
-       
+.card h1,
+.card h2,
+.card p {
+    padding-top: 0.5rem;
+    text-align: center;
 }
+
+.male,
+.male p {
+    background-color: #ADD5F7;
+    color: #16193B;
+}
+
+.female,
+.female p {
+    background-color: #FFD8E6;
+    color: #87071F;
+}
+
 .male img {
-      border-color: #16193B;
+    border-color: #16193B;
 }
 
 .female img {
-     border-color:#87071F;
+    border-color: #87071F;
 }
-
-

@@ -1,14 +1,13 @@
+/******************* setting global variables  **************************************/
 "use strict";
 let profiles = [];
 let imgurl = "";
-let swipeCheck = true;
-let gender= ""; //female or male or blank for both
-let  url = "http://griffis.edumedia.ca/mad9022/tundra/get.profiles.php?gender=" + gender;
-
+let swipeCheck = false;
+let gender = ""; //female or male or blank for both
+let url = "http://griffis.edumedia.ca/mad9022/tundra/get.profiles.php?gender=" + gender;
+/******************* fetching json file  **************************************/
 let serverData = {
-    
-   
-     httpRequest: "GET"
+    httpRequest: "GET"
     , getJSON: function () {
         // Add headers and options objects
         // Create an empty Request Headers instance
@@ -22,28 +21,27 @@ let serverData = {
             , mode: "cors"
             , headers: headers
         };
-
         let request = new Request(url, options);
         fetch(request).then(function (response) {
-            console.log(response);
             return response.json();
         }).then(function (jsonData) {
             imgurl = "http:" + decodeURIComponent(jsonData.imgBaseURL);
             profiles = profiles.concat(jsonData.profiles);
-            
+            if (profiles.length < 7) {
                 showProfile();
-            
+            }
             return jsonData;
         }).catch(function (err) {
             console.log("Error: " + err.message);
-            swipeCheck = true;
-
+            
             function reqListener() {
                 var data = JSON.parse(this.responseText);
-                // console.log(data);
+               
                 profiles = profiles.concat(data.profiles);
                 imgurl = "http:" + decodeURIComponent(data.imgBaseURL);
-                showProfile();
+                if (profiles.length < 7) {
+                    showProfile();
+                }
             }
 
             function reqError(err) {
@@ -58,21 +56,16 @@ let serverData = {
     }
 };
 
-
-
-
-
-
-function jsonError(){
-    //document.getElementById('myCard').innerHTML = err.message;
-    swipeCheck = true;
-
+function jsonError() {
+    
     function reqListener() {
         var data = JSON.parse(this.responseText);
         // console.log(data);
         profiles = profiles.concat(data.profiles);
         imgurl = "http:" + decodeURIComponent(data.imgBaseURL);
-        showProfile();
+        if (profiles.length < 7) {
+            showProfile();
+        }
     }
 
     function reqError(err) {
@@ -84,9 +77,8 @@ function jsonError(){
     oReq.open('get', url, true);
     oReq.send();
 }
-
-
-function getProfiles(){
+// this seems redundent but ipad did not recognize fetch so this was added to fix the issue with Ipad
+function getProfiles() {
     try {
         serverData.getJSON();
     }
@@ -94,58 +86,73 @@ function getProfiles(){
         jsonError();
     }
 }
-
-
-
-
-
-
-
-
-
 /*********************** swipe functions ********************/
 function touchAction() {
+    console.log("making touch");
     let parentTouchArea = document.getElementById('one');
     let touchArea = document.getElementById('myCard');
     let myRegion = new ZingTouch.Region(parentTouchArea);
-    let myTapGesture = new ZingTouch.Swipe({
-        numInputs: 1
-        , maxRestTime: 100
-        , escapeVelocity: 0.001
+    
+    let myTapGesture = new ZingTouch.Pan({
+        threshold: 30
     });
-  
     myRegion.bind(touchArea, myTapGesture, swipeFunction);
+    
+    function swipeFunction(event) {
+        event.preventDefault();
+        console.log("swiped");
+        let touchArea = document.getElementById('myCard');
+        if (event.detail.data[0].currentDirection >= 150 && event.detail.data[0].currentDirection <= 210) {
+            myRegion.unbind(touchArea);
+            swipeLeft();
+        }
+        else if (event.detail.data[0].currentDirection >= 330 || event.detail.data[0].currentDirection <= 30) {
+            
+            
+            myRegion.unbind(touchArea);
+            swipeRight();
+        }
+        
+    }
 }
 
-function swipeFunction(event) {
-    let touchArea = document.getElementById('myCard');
+function swipeRight() {
     
-    if (event.detail.data[0].currentDirection >= 150 && event.detail.data[0].currentDirection <= 210) {
-        swipeLeft();
+        if (swipeCheck == true) {
+        console.log("swipeCheck true");
+        let profile = profiles.shift();
+        swipeCheck = false;
+        document.getElementById('myCard').classList.add("active") ;
+        //document.getElementById('myCard').className = "card table-view";
+        document.getElementById('myCard').innerHTML = "<h1 class='saved'>Saved Profile</h1>";
+        let preloadimg = new Image();
+        preloadimg.src = imgurl + profiles[0].avatar;
+        if (profiles.length < 3) {
+           
+            getProfiles();
+        }
+        setTimeout(showProfile, 1000);
     }
-    else if (event.detail.data[0].currentDirection >= 330 || event.detail.data[0].currentDirection <= 30) {
-         touchArea.className = "card table-view" ;
-        touchArea.textContent = "swiped right";
-    }
-    // alert("swiped")
 }
 
 function swipeLeft() {
     if (swipeCheck == true) {
+        console.log("swipeCheck true");
         let profile = profiles.shift();
         swipeCheck = false;
-        document.getElementById('myCard').className = "card table-view" ;
-        document.getElementById('myCard').innerHTML = "<h1 class='delete'><br/>Profile<br/> Deleted<h1>";
+        document.getElementById('myCard').classList.add("active") ;
+        //document.getElementById('myCard').className = "card table-view";
+        document.getElementById('myCard').innerHTML = "<h1 class='delete'>Deleted Profile</h1>";
         let preloadimg = new Image();
         preloadimg.src = imgurl + profiles[0].avatar;
         if (profiles.length < 3) {
-            // serverData.getJSON();
+           
             getProfiles();
         }
         setTimeout(showProfile, 1000);
-       
     }
 }
+
 function showProfile() {
     let cardprofile = document.getElementById('myCard');
     let img = document.createElement("img");
@@ -161,62 +168,36 @@ function showProfile() {
     cardprofile.appendChild(p);
     cardprofile.className = "card table-view " + profiles[0].gender;
     swipeCheck = true;
+    touchAction();
 }
 /************* page load events *****************/
-function pageSelector(ev) {
+function init(ev) {
     //determine the page
-    let contentDiv = ev.currentTarget.document.querySelector(".content");
+    let contentDiv = document.querySelector(".content");
     let id = contentDiv.id; //contentDiv.getAttribute("id");
     switch (id) {
     case "one":
-        touchAction();
         if (profiles.length == 0) {
-            //document.getElementById('myCard').innerHTML = "<h1 >Loading</h1>";
-            // serverData.getJSON();
+            document.getElementById('myCard').innerHTML = "<h1 class='saved'>Loading....</h1>";
+            
             getProfiles();
         }
-        else if (profiles.length < 3) {
-            // serverData.getJSON();
+        else if (profiles.length < 4) {
             getProfiles();
         }
         else {
             showProfile();
         }
+        touchAction();
         break;
     case "two":
         //do something for the contacts page 
+        console.log("page 2");
         break;
     default:
         //do the home page thing
     }
 }
 /**************************** Initialising ********************************/
-function init(ev) {
-    let contentDiv = document.querySelector(".content");
-    let id = contentDiv.id; //contentDiv.getAttribute("id");
-    switch (id) {
-    case "one":
-        touchAction();
-        if (profiles.length == 0) {
-         //   document.getElementById('myCard').innerHTML = "<h1 >Loading</h1>";
-           // serverData.getJSON();
-            getProfiles();
-        }
-        else if (profiles.length < 3) {
-           // serverData.getJSON();
-            getProfiles();
-        }
-        else {
-            showProfile();
-        }
-        break;
-    case "two":
-        //do something for the contacts page 
-        break;
-    default:
-        //do the home page thing
-    }
-    
-}
-window.addEventListener('push', pageSelector);
+window.addEventListener('push', init);
 document.addEventListener("DOMContentLoaded", init);
