@@ -79,24 +79,34 @@
 
 .icon-trash {
   
-    font-size: 3rem;
-    vertical-align: middle;
-    text-align: right;
-    
+    font-size: 2.5rem;
+  
 
 }
+
+.table-view-cell {
+
+    padding: 11px 35px 11px 15px;
+
+
+}
+
 
 .media img {
-    display:inline-block;
-    clear: both;
-    margin: auto auto;
-    border: 5px solid #ddd;
-    border-radius: 50%;
-    width: 10vh;
+    display: flex;
+    flex-flow: row;
+    width: 42px;
     
 }
 
-.navigate-right .trash {
-  right: 15px;
-  content: '<span class=" pull-left icon icon-trash" id="delete-saved"></span>';
+.content .media-object{
+        width: 42px;
 }
+
+.media div {
+    display: flex;
+    flex-flow: row;
+    width: 42px;
+    
+}
+

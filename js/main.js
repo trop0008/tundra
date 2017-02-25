@@ -1,11 +1,26 @@
-/******************* setting global variables  **************************************/
+/*****************************************************************
+File: main.js
+Author: Marjan Tropper
+Description:
+
+
+Version: 0.1.1
+Updated: Feb 24, 2017
+
+*****************************************************************/
+//Declarations
+
 "use strict";
+let firstLoad = true;
+
 let profiles = [];
-let savedProfiles = [];
+//let savedProfiles = [];
 let imgurl = "";
 let swipeCheck = false;
 let gender = ""; //female or male or blank for both
 let url = "http://griffis.edumedia.ca/mad9022/tundra/get.profiles.php?gender=" + gender;
+let savedListProfiles={savedProfiles:[]};
+
 /******************* fetching json file  **************************************/
 let serverData = {
     httpRequest: "GET"
@@ -119,12 +134,14 @@ function touchAction() {
 
 function swipeRight() {
     
-        if (swipeCheck == true) {
+        if (swipeCheck) {
         console.log("swipeCheck true");
         let profile = profiles.shift();
             console.log(profile);
-            savedProfiles = savedProfiles.concat(profile);
-            console.log(savedProfiles);
+
+            savedListProfiles.savedProfiles.push(profile);
+            setLocalStorage();
+            console.log(savedListProfiles);
         swipeCheck = false;
         document.getElementById('myCard').classList.add("activeSwipe") ;
         //document.getElementById('myCard').className = "card table-view";
@@ -140,7 +157,7 @@ function swipeRight() {
 }
 
 function swipeLeft() {
-    if (swipeCheck == true) {
+    if (swipeCheck ) {
         console.log("swipeCheck true");
         let profile = profiles.shift();
         swipeCheck = false;
@@ -174,6 +191,76 @@ function showProfile() {
     swipeCheck = true;
     touchAction();
 }
+
+
+/**************************** local storage functions ********************************/
+ 
+function setLocalStorage(){
+    if(localStorage){
+                        localStorage.setItem("trop0008", JSON.stringify(savedListProfiles));
+                    } 
+    
+    
+}
+
+function getLocalStorage(){
+    if (!localStorage.getItem("trop0008")) {
+        // get the json data
+         document.getElementById('two').innerHTML ="<p>You have have not saved any profiles.</p>"
+
+
+    } else {
+
+
+
+
+        savedListProfiles = JSON.parse(localStorage.getItem('trop0008'));
+
+
+        if (savedListProfiles == null || savedListProfiles == "{}") {
+
+             document.getElementById('saved').innerHTML ="<h2 class='content-padded'>You do not have any saved profiles.</h2>"
+        } else {
+
+           if (savedListProfiles.savedProfiles!=null){
+            
+               /*savedListProfiles.savedProfiles.forEach(function(locations,index){
+                   // the saved list items are created here
+                   
+                   let cardprofile = document.getElementById('myCard');
+    let img = document.createElement("img");
+    let h2 = document.createElement("h2");
+    let name = "".concat(profiles[0].first, " ", profiles[0].last);
+    img.src = imgurl + profiles[0].avatar;
+    h2.innerHTML += " " + name;
+    let p = document.createElement("p");
+    p.innerHTML = "Distance: " + profiles[0].distance;
+    cardprofile.innerHTML = "";
+    cardprofile.appendChild(img);
+    cardprofile.appendChild(h2);
+    cardprofile.appendChild(p);
+    cardprofile.className = "card table-view " + profiles[0].gender;
+                   
+                   
+                   
+                    });*/
+           } else {
+               
+                document.getElementById('saved').innerHTML ="<h2 class='content-padded'>You do not have any saved profiles.</h2>"
+           }
+
+            
+        }
+
+
+}
+}
+
+
+
+
+
+
 /************* page load events *****************/
 function init(ev) {
     //determine the page
@@ -182,28 +269,35 @@ function init(ev) {
     
     switch (id) {
     case "one":
+            console.log("loading");
+            console.log(profiles);
         if (profiles.length == 0) {
             
             document.getElementById('myCard').innerHTML = "<h1 class='saved'>Loading....</h1>";
             
             getProfiles();
         }
-        else if (profiles.length < 4) {
+        else if (profiles.length < 3) {
             getProfiles();
         }
         else {
-            showProfile();
+
+                showProfile();
+         
+            
         }
         touchAction();
         break;
     case "two":
         //do something for the contacts page 
         console.log("page 2");
+            getLocalStorage();
         break;
     default:
         //do the home page thing
     }
 }
+
 /**************************** Initialising ********************************/
 window.addEventListener('push', init);
 document.addEventListener("DOMContentLoaded", init);
