@@ -206,7 +206,7 @@ function setLocalStorage(){
 function getLocalStorage(){
     if (!localStorage.getItem("trop0008")) {
         // get the json data
-         document.getElementById('two').innerHTML ="<p>You have have not saved any profiles.</p>"
+         document.getElementById('saved').innerHTML ="<h3 class='delete' >You have not any saved profiles.</h3>" ;
 
 
     } else {
@@ -219,7 +219,7 @@ function getLocalStorage(){
 
         if (savedListProfiles == null || savedListProfiles == "{}") {
 
-             document.getElementById('saved').innerHTML ="<h2 class='content-padded'>You do not have any saved profiles.</h2>"
+             document.getElementById('saved').innerHTML ="<h3 class='delete' >You have not any saved profiles.</h3>" ;
         } else {
 
            if (savedListProfiles.savedProfiles!=null){
@@ -246,7 +246,7 @@ function getLocalStorage(){
                     });*/
            } else {
                
-                document.getElementById('saved').innerHTML ="<h2 class='content-padded'>You do not have any saved profiles.</h2>"
+                 document.getElementById('saved').innerHTML ="<h3 class='delete' >You have not any saved profiles.</h3>" ;
            }
 
             
