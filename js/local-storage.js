@@ -78,3 +78,53 @@ function createMarkers(MLat,MLng,MTime){
   });
   
 }
+
+
+
+               /*savedListProfiles.savedProfiles.forEach(function(locations,index){
+                   // the saved list items are created here
+                   
+                   let cardprofile = document.getElementById('myCard');
+    let img = document.createElement("img");
+    let h2 = document.createElement("h2");
+    let name = "".concat(profiles[0].first, " ", profiles[0].last);
+    img.src = imgurl + profiles[0].avatar;
+    h2.innerHTML += " " + name;
+    let p = document.createElement("p");
+    p.innerHTML = "Distance: " + profiles[0].distance;
+    cardprofile.innerHTML = "";
+    cardprofile.appendChild(img);
+    cardprofile.appendChild(h2);
+    cardprofile.appendChild(p);
+    cardprofile.className = "card table-view " + profiles[0].gender;
+           
+           
+           
+           
+            <ul class="table-view">
+  <li class="table-view-cell ">
+    <span class="media-object pull-right icon icon-trash"></span>
+      <img class="media-object  pull-left" src="http://placehold.it/42x42">
+      <div class="media-body">
+        Item 1
+        
+        <p>Lorem ipsum dolor sit amet</p>
+      </div>
+    
+          </li></ul>
+          
+          
+            <!-- <ul class="table-view">
+  <li class="table-view-cell ">
+    <span class="media-object pull-right icon icon-trash"></span>
+      <img class="media-object  pull-left" src="http://placehold.it/42x42">
+      <div class="media-body">
+        Item 1
+        
+        <p>Lorem ipsum dolor sit amet</p>
+      </div>
+    
+          </li></ul>-->
+                   
+                   
+                    });*/
