@@ -223,6 +223,8 @@ function getLocalStorage(){
         } else {
 
            if (savedListProfiles.savedProfiles!=null){
+               let profileList = document.getElementById('saved');
+               profileList.innerHTML= "Hello";
             
                /*savedListProfiles.savedProfiles.forEach(function(locations,index){
                    // the saved list items are created here
@@ -240,7 +242,21 @@ function getLocalStorage(){
     cardprofile.appendChild(h2);
     cardprofile.appendChild(p);
     cardprofile.className = "card table-view " + profiles[0].gender;
-                   
+           
+           
+           
+           
+            <ul class="table-view">
+  <li class="table-view-cell ">
+    <span class="media-object pull-right icon icon-trash"></span>
+      <img class="media-object  pull-left" src="http://placehold.it/42x42">
+      <div class="media-body">
+        Item 1
+        
+        <p>Lorem ipsum dolor sit amet</p>
+      </div>
+    
+          </li></ul>
                    
                    
                     });*/
