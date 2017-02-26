@@ -14,6 +14,7 @@ Description:
     •	Every time a profile is deleted or saved the user gets a prompt letting them know what happened
     •	Ratchet CSS framework is used for styling (http://goratchet.com/components)
     •	Zing touch has been used to add swipe functionality (https://zingchart.github.io/zingtouch)
+    ** added capability of changing gender dynamically 
 
 
 
@@ -262,6 +263,41 @@ function getLocalStorage() {
         }
     }
 }
+/****************************** set gender **********************************/
+function setGender(ev) {
+    let id = ev.target.id;
+    switch (id) {
+        /*  
+        For male and female if we are changing gender preference we need to empty the global array and Fetch again. 
+        for no preference we don't need to immidiatly do anything other than setting the gender. 
+        The change will not apply to previously saved profiles. Only affects profiles they view.
+       
+       
+        */
+    case "genderMale":
+        if (gender != "male") {
+            alert
+            gender = "male";
+            url = "http://griffis.edumedia.ca/mad9022/tundra/get.profiles.php?gender=" + gender;
+            profiles = [];
+            getProfiles();
+        }
+        break;
+    case "genderFemale":
+        if (gender != "female") {
+            gender = "female";
+            url = "http://griffis.edumedia.ca/mad9022/tundra/get.profiles.php?gender=" + gender;
+            profiles = [];
+            getProfiles();
+        }
+        break;
+    case "genderNone":
+    default:
+        gender = "";
+        url = "http://griffis.edumedia.ca/mad9022/tundra/get.profiles.php?gender=" + gender;
+    }
+    document.getElementById("settingsModal").className = "modal";
+}
 /************* page load events *****************/
 function init(ev) {
     //determine the page
@@ -272,6 +308,9 @@ function init(ev) {
         if (profiles.length == 0) {
             document.getElementById('myCard').innerHTML = "<h1 class='saved'>Loading....</h1>";
             getProfiles();
+            document.getElementById("genderMale").addEventListener("click", setGender);
+            document.getElementById("genderFemale").addEventListener("click", setGender);
+            document.getElementById("genderNone").addEventListener("click", setGender);
         }
         else if (profiles.length < 3) {
             getProfiles();

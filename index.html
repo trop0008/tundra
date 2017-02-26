@@ -15,6 +15,7 @@
 	<body>
         <header class="bar bar-nav">
 <!--            <a href="settings.html" class="icon icon-gear pull-right"></a>-->
+           <a class="icon icon-gear pull-right" href="#settingsModal"></a>
             <h1 class="title">Latest Profiles</h1>
         </header>
         
@@ -39,6 +40,27 @@
 
             </div>
         </div>
+        
+         <!-- Settings modal -->
+    <div id="settingsModal" class="modal">
+      <header class="bar bar-nav">
+        <a class="icon icon-close pull-right" href="#settingsModal"></a>
+        <h1 class="title">Settings</h1>
+      </header>
+
+      <div class="content">
+    
+
+        <h5 class="content-padded">App settings</h5>
+        <div class="content-padded">
+        <h6 class="content-padded">Click a button to set your preference:</h6>
+        <button class="btn btn-block male" id="genderMale" >I'm interested in Men</button>
+        <button class="btn btn-block female" id="genderFemale">I'm interested in Women</button>
+        <button class="btn btn-block" id="genderNone">I'm interested in Both</button>
+        </div>
+       
+      </div>
+    </div><!-- /.modal -->
          <script src="js/zingtouch.min.js"></script>
 
         <script src="js/main.js"></script>
