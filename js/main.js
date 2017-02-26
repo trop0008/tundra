@@ -22,16 +22,14 @@ Updated: Feb 26, 2017
 *****************************************************************/
 //Declarations
 "use strict";
-let firstLoad = true;
 let profiles = [];
-//let savedProfiles = [];
 let imgurl = "";
 let swipeCheck = false;
 let gender = ""; //female or male or blank for both
 let url = "http://griffis.edumedia.ca/mad9022/tundra/get.profiles.php?gender=" + gender;
 let savedListProfiles = {
-    url:"",
-    savedProfiles: []
+    url: ""
+    , savedProfiles: []
 };
 /******************* fetching json file  **************************************/
 let serverData = {
@@ -54,8 +52,8 @@ let serverData = {
             return response.json();
         }).then(function (jsonData) {
             imgurl = "http:" + decodeURIComponent(jsonData.imgBaseURL);
-           /* without the http: is front of the image url it would randomly not show images so http: was added to the url string to solve the bug*/
-            savedListProfiles.url=imgurl;
+            /* without the http: is front of the image url it would randomly not show images so http: was added to the url string to solve the bug*/
+            savedListProfiles.url = imgurl;
             profiles = profiles.concat(jsonData.profiles);
             if (profiles.length < 7) {
                 showProfile();
@@ -68,7 +66,7 @@ let serverData = {
                 var data = JSON.parse(this.responseText);
                 profiles = profiles.concat(data.profiles);
                 imgurl = "http:" + decodeURIComponent(data.imgBaseURL);
-                savedListProfiles.url=imgurl;
+                savedListProfiles.url = imgurl;
                 if (profiles.length < 7) {
                     showProfile();
                 }
@@ -91,7 +89,7 @@ function jsonError() {
         var data = JSON.parse(this.responseText);
         profiles = profiles.concat(data.profiles);
         imgurl = "http:" + decodeURIComponent(data.imgBaseURL);
-        savedListProfiles.url=imgurl;
+        savedListProfiles.url = imgurl;
         if (profiles.length < 7) {
             showProfile();
         }
@@ -161,7 +159,6 @@ function swipeLeft() {
         let profile = profiles.shift();
         swipeCheck = false;
         document.getElementById('myCard').classList.add("activeSwipe");
-        
         document.getElementById('myCard').innerHTML = "<h1 class='delete'>Deleted Profile</h1>";
         let preloadimg = new Image();
         preloadimg.src = imgurl + profiles[0].avatar;
@@ -192,7 +189,6 @@ function showProfile() {
 /**************************** local storage functions ********************************/
 function setLocalStorage() {
     if (localStorage) {
-        
         localStorage.setItem("trop0008", JSON.stringify(savedListProfiles));
     }
 }
@@ -214,8 +210,8 @@ function getLocalStorage() {
                     document.getElementById('saved').innerHTML = "<h3 class='delete' >You have not saved any profiles.</h3>";
                 }
                 else {
-                    if (imgurl == ""){
-                        imgurl= savedListProfiles.url;
+                    if (imgurl == "") {
+                        imgurl = savedListProfiles.url;
                     }
                     let profileList = document.getElementById('saved');
                     profileList.innerHTML = "";
@@ -235,7 +231,7 @@ function getLocalStorage() {
                         let name = "".concat(savedProfile.first, " ", savedProfile.last);
                         div.innerHTML += " " + name;
                         let p = document.createElement("p");
-                        p.innerHTML = "Distance: " +  savedProfile.distance;
+                        p.innerHTML = "Distance: " + savedProfile.distance;
                         div.appendChild(p);
                         li.appendChild(span);
                         li.appendChild(img);
